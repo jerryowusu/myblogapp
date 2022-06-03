@@ -1,10 +1,11 @@
+![](https://img.shields.io/badge/Microverse-blueviolet)
 # My Blog App
 
-> **myblogapp** is an implementation of the classic blog website. It's a full stack ruby on rails website that show the list of posts and allows readers to comment and like the posts.
+> **myblogapp** is an implementation of the classic blog website. It's a full stack ruby on rails website that show the list of posts and allows readers to comment and like the posts. Created as a practice to learn Ruby on Rails
 
 ## Milestones
 
-- [x] Milestone 1: Setup and controllers.
+- [ ] Milestone 1: Setup and controllers.
 - [ ] Milestone 2: Controllers specs.
 - [ ] Milestone 3: Creating a data model.
 - [ ] Milestone 4: Processing data in models.
@@ -17,10 +18,16 @@
 - [ ] Milestone 11: Add API endpoints.
 - [ ] Milestone 12: API documentation.
 
+## Built with
+
+- Ruby
+- Rails
+- Postgresql
+
 ## Getting Started
 
 - Run `bundle install` to get the dependencies.
-- Run `rails s` to start interactive the `puma` server.
+- Run `rails s` to start the app.
 - Open `http://localhost:3000` in your browser.
 
 - to run tests `bundle exec rspec`.
