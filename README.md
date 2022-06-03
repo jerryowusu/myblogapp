@@ -36,8 +36,8 @@
 
 👤 **Jerry Owusu**
 
-- GitHub: [jerryowusu](https://github.com/jerry-owusu)
-- LinkedIn: [jerry owusu](https://linkedin.com/in/jerryowusu)
+- GitHub: [jerryowusu](https://github.com/jerryowusu)
+- LinkedIn: [jerry owusu](https://www.linkedin.com/in/jerry-owusu/)
 
 ## 🤝 Contributing
 
