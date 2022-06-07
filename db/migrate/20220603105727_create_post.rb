@@ -8,7 +8,7 @@ class CreatePost < ActiveRecord::Migration[7.0]
 
       t.timestamps
 
-      t.references :author, foreign_key: { to_table: 'users' }
+      t.references :author, foreign_key: { to_table: :users }
     end
   end
 end
