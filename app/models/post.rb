@@ -11,4 +11,8 @@ class Post < ApplicationRecord
             posts_counter: user.posts.count
         )
     end 
+
+    def five_most_recent_comments
+        comments.limit(5)
+    end
 end
