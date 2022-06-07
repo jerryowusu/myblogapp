@@ -1,7 +1,11 @@
-# frozen_string_literal: true
-
 class PostsController < ApplicationController
-  def index; end
+  def index
+    author_id = params[:user_id]
+    @user = User.find(author_id)
+    @posts = @user.posts
+  end
 
-  def show; end
+  def show
+    @post = Post.find(params[:id])
+  end
 end
