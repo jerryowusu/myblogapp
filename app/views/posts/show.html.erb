@@ -2,7 +2,7 @@
 
   <div class="mb-3 d-flex flex-row justify-content-between">
     <div>
-        <h5>Post# <%=  @post.id %> by <%= @user.name %> </h5> 
+        <h5>Post# <%=  @post.id %> by <%= @post.author.name %> </h5> 
     </div>
 
     <div class="d-flex flex-row justify-content-between" >
@@ -25,7 +25,7 @@
             <% end %>
         </div>
     <% else %>
-      <h3>No comments for post# <%=  post.id %> </h3>
+      <h3>No comments for post# <%=  @post.id %> </h3>
     <% end %>
     </div>
 
