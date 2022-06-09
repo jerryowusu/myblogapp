@@ -3,7 +3,7 @@
     <div class="user">
       <%= image_tag("images.png", :alt => "rss feed", class: 'img-fluid rounded-start')   %> 
       <a class="link-to-user" href="/users/<%= @user.id %>"><%= @user.name %></a>
-      <h4 class="posts-count">Posts(<%= @user.posts.size %>)</h4>
+      <h4 class="posts-count">Number of Posts: <%= @user.posts.size %></h4>
         <% if @current_user && @current_user.id == @user.id%>
      <%= link_to "New post", new_user_post_path(@user.id) %>
     <% end %>
