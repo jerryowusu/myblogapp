@@ -14,6 +14,10 @@ class User < ApplicationRecord
     validates :name, presence: true
     validates_numericality_of :posts_counter, only_integer: true, greater_than_or_equal_to: 0
 
+    def is?(requested_role)
+      role == requested_role.to_s
+    end
+
     def all_posts
       posts.order(created_at: :desc)
     end
