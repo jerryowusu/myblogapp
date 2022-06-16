@@ -1,7 +1,7 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 # My Blog App
 
-> **myblogapp** is an implementation of the classic blog website. It's a full stack ruby on rails website that show the list of posts and allows readers to comment and like the posts. Created as a practice to learn Ruby on Rails
+> **myblogapp** Blog app made with Ruby on Rails. User can make posts, comments and likes on posts of other users. Also user can delete posts and comments created by user. User can edit profile and delete account if not happy. For creating posts and comments user must login. Admin can manage all.
 
 ## Milestones
 
