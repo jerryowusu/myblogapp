@@ -14,12 +14,12 @@ RSpec.describe User, type: :model do
       expect(@user).to_not be_valid
     end
 
-    it 'PostsCounter must be greater than or equal to zero' do
+    it 'Posts Counter must be greater than or equal to zero' do
       @user.posts_counter = -1
       expect(@user).to_not be_valid
     end
 
-    it 'PostsCounter must be greater than or equal to zero' do
+    it 'Posts Counter must be greater than or equal to zero' do
       @user.posts_counter = 7
       expect(@user).to be_valid
     end
