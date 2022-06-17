@@ -1,76 +1,57 @@
-
 require 'rails_helper'
 
-RSpec.describe 'Testing posts/show page', type: :feature do
-  describe 'current user session test' do
+RSpec.describe 'Login', type: :feature do
+  describe 'login' do
     before(:each) do
-      @user1 = User.create(name: 'Jerry', photo: 'photo', bio: 'Teacher from Ghana.', email: 'jerry@gmail.com',
-                           password: 'jerrysecret', confirmed_at: Time.now, postscounter: 0)
-      @user2 = User.create(name: 'Nuri', photo: 'photo', bio: 'Teacher from Mexico.', email: 'photo@gmail.com',
-                           password: 'nurisecret', confirmed_at: Time.now, posts_counter: 0)
-      @user3 = User.create(name: 'Esther', photo: 'photo', bio: 'Doctor from Ghana.', email: 'esther@gmail.com',
-                           password: 'estherecret', confirmed_at: Time.now, posts_counter: 0)
-      @post1 = Post.create(title: 'Testing with capybara', text: 'test for views', author_id: @user1.id)
+      @user = User.create!(name: 'User', photo: 'photo.png', password: '123456',
+                           email: 'user@email.com', confirmed_at: Time.now)
+      @user2 = User.create!(name: 'User2', photo: 'photo.png', password: '123456',
+                            email: 'user2@email.com', confirmed_at: Time.now)
 
-      @coment1 = Comment.create(text: ' test comment 1', author_id: @user1.id, post_id: @post1.id)
-      @coment2 = Comment.create(text: ' test comment 2', author_id: @user3.id, post_id: @post1.id)
-      @coment3 = Comment.create(text: ' test comment 3', author_id: @user2.id, post_id: @post1.id)
-      @like = Like.create(author_id: @user2.id, post_id: @post1.id)
-      @like = Like.create(author_id: @user1.id, post_id: @post1.id)
-      @like = Like.create(author_id: @user2.id, post_id: @post1.id)
-
-      visit user_session_path
-
-      fill_in 'Email',	with: @user1.email
-      fill_in 'Password',	with: @user1.password
+      visit new_user_session_path
+      fill_in 'Email', with: 'user@email.com'
+      fill_in 'Password', with: '123456'
       click_button 'Log in'
+      visit user_posts_path(@user.id)
 
-      visit user_post_path(user_id: @user1.id, id: @post1.id)
+      @post1 = @user.posts.create!(title: 'Post1', text: 'description', comments_counter: 0, likes_counter: 0,
+                                   created_at: Time.now)
+      @comment = @post1.comments.create!(text: 'comment1', author_id: @user.id)
+      @comment2 = @post1.comments.create!(text: 'comment2', author_id: @user2.id)
+
+      @like = @post1.likes.create!(author_id: @user.id)
+
+      click_on 'User'
+      click_link 'Post1'
+
     end
 
-    scenario 'if user can see own name' do
-      expect(page).to have_content 'Jerry'
+    scenario 'I can see the posts title.' do
+      expect(page).to have_content('Post1')
     end
 
-    scenario 'if user can see post title' do
-      expect(page).to have_content 'Testing with capybara'
+    scenario 'I can see the author.' do
+      expect(page).to have_content('User')
+    end
+   
+    scenario 'I can see the post body.' do
+      expect(page).to have_content('description')
     end
 
-    scenario 'if user can see post text' do
-      expect(page).to have_content 'test for views'
+    scenario 'I can see the username of each commentor.' do
+      expect(page).to have_content('User: comment1')
     end
 
-    scenario 'if user can see comments text' do
-      expect(page).to have_content 'Comment:'
-      expect(page).to have_content 'Esther: test comment 2'
+    scenario 'I can see the comment each commentor left.' do
+      expect(page).to have_content('comment2')
     end
 
-    scenario 'if user can see posts count' do
-      expect(page).to have_content 'Comments : 3'
+    scenario 'I can see the author.' do
+      expect(page).to have_content('User')
     end
-
-    scenario 'if user can see likes count' do
-      expect(page).to have_content 'Likes : 3'
-    end
-
-    scenario 'if page has link' do
-      expect(page.has_button?('~Like~')).to be true
-    end
-
-    scenario 'if page has link' do
-      expect(page.has_button?('Delete')).to be true
-    end
-
-    scenario 'if I can see the username of each commentor.' do
-      expect(page).to have_content 'Jerry'
-      expect(page).to have_content 'Nuri'
-      expect(page).to have_content 'Esther'
-    end
-
-    scenario 'if I can see the comment each commentor left.' do
-      expect(page).to have_content 'test comment 1'
-      expect(page).to have_content 'test comment 2'
-      expect(page).to have_content 'test comment 3'
+   
+    scenario 'I can see the post body.' do
+      expect(page).to have_content('description')
     end
   end
 end

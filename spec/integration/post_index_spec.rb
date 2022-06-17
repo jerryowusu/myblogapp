@@ -1,74 +1,62 @@
 require 'rails_helper'
 
-RSpec.describe 'Testing posts/index page', type: :feature do
-  describe 'current user session test' do
+RSpec.describe 'Login', type: :feature do
+  describe 'login' do
     before(:each) do
-      @user1 = User.create(name: 'Jerry', photo: 'https://i.kinja-img.com/gawker-media/image/upload/t_original/ijsi5fzb1nbkbhxa2gc1.png',
-                           bio: 'Teacher from Ghana.', email: 'jerry@gmail.com',
-                           password: 'jerrysecret', confirmed_at: Time.now, posts_counter: 0)
-      @user2 = User.create(name: 'Nuri', photo: 'photo', bio: 'Teacher from Mexico.', email: 'photo@gmail.com',
-                           password: 'nurisecret', confirmed_at: Time.now, posts_counter: 0)
-      @user3 = User.create(name: 'Esther', photo: 'photo', bio: 'Doctor from Ghana.', email: 'esther@gmail.com',
-                           password: 'esthersecret', confirmed_at: Time.now, posts_counter: 0)
-      @post1 = Post.create(title: 'Testing with capybara', text: 'test for views', author_id: @user1.id)
-      @post2 = Post.create(title: 'Testing post-index page', text: 'test for views post-index page',
-                           author_id: @user1.id)
-      @coment1 = Comment.create(text: ' test comment 1', author_id: @user1.id, post_id: @post1.id)
-      @coment2 = Comment.create(text: ' test comment 2', author_id: @user3.id, post_id: @post1.id)
-      @coment3 = Comment.create(text: ' test comment 3', author_id: @user2.id, post_id: @post1.id)
-      @like = Like.create(author_id: @user2.id, post_id: @post1.id)
-      @like = Like.create(author_id: @user1.id, post_id: @post1.id)
-      @like = Like.create(author_id: @user2.id, post_id: @post1.id)
+      @user = User.create!(name: 'User', photo: 'photo.png', password: '123456', email: 'user@email.com',
+                           confirmed_at: Time.now)
+      @user2 = User.create!(name: 'User2', photo: 'photo.png', password: '123456', email: 'user2@email.com',
+                            confirmed_at: Time.now)
 
-      visit user_session_path
-
-      fill_in 'Email',	with: @user1.email
-      fill_in 'Password',	with: @user1.password
+      visit new_user_session_path
+      fill_in 'Email', with: 'user@email.com'
+      fill_in 'Password', with: '123456'
       click_button 'Log in'
+     
+      @post1 = @user.posts.create!(title: 'Post1', text: 'description', comments_counter: 0, likes_counter: 0,
+                                   created_at: Time.now)
+      @comment = @post1.comments.create!(text: 'comment1', author_id: @user.id)
+      @comment2 = @post1.comments.create!(text: 'comment2', author_id: @user2.id)
 
-      visit user_posts_path user_id: @user1.id
+      @like = @post1.likes.create!(author_id: @user.id)
+      click_on 'User'
+      click_link 'See all posts'
     end
 
-    scenario 'if user can see own name' do
-      expect(page).to have_content 'Jerry'
+    scenario 'I can see the users profile picture.' do
+      expect(page).to have_selector('img')
     end
 
-    scenario 'if user can see number of posts of other users.' do
-      expect(page).to have_content 'Posts(2)'
+    scenario 'I can see the users username.' do
+      expect(page).to have_content('User')
     end
 
-    scenario 'if user can see post title' do
-      expect(page).to have_content 'Testing with capybara'
+    scenario 'I can see the number of posts the user has written.' do
+      expect(page).to have_content('Posts(1)')
     end
 
-    scenario 'if user can see post text' do
-      expect(page).to have_content 'test for views'
+    scenario 'I can see a posts title.' do
+      expect(page).to have_content('Post1')
     end
 
-    scenario 'if user can see comments text' do
-      expect(page).to have_content 'Comments:'
-      expect(page).to have_content 'Nuri: test comment 3 Esther: test comment 2 Jerry: test comment 1'
+    scenario 'I can see some of the posts body.' do
+      expect(page).to have_content('description')
     end
 
-    scenario 'if user can see posts count' do
-      expect(page).to have_content 'Comments: 3'
+    scenario 'I can see the first comments on a post.' do
+      expect(page).to have_content('Post1')
     end
 
-    scenario 'if user can see likes count' do
-      expect(page).to have_content 'Likes: 3'
+    scenario 'I can see how many comments a post has.' do
+      expect(page).to have_content('Comments: 2')
     end
 
-    scenario 'if page has link' do
-      expect(page.has_link?('All users')).to be true
+    scenario 'I can see how many likes a post has.' do
+      expect(page).to have_content('Likes: 1')
     end
 
-    scenario 'I can see the user profile.' do
-      expect(page.first('img')['src']).to have_content 'https://i.kinja-img.com/gawker-media/image/upload/t_original/ijsi5fzb1nbkbhxa2gc1.png'
-    end
-
-    it "if I click on a post, it redirects me to that post's show page." do
-      click_on 'Testing with capybara'
-      expect(current_path).to eq user_post_path user_id: @user1.id, id: @post1.id
+    scenario 'I can see a posts title.' do
+      expect(page).to have_content('Post1')
     end
   end
 end
