@@ -1,13 +1,10 @@
-
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'validations for User model' do
     before(:each) do
-      @user = User.new(name: 'Jerry')
+      @user = User.create(name: 'Jerry', email: 'jerry@gmail', password: 'secret')
     end
-
-    before { @user.save }
 
     it 'if there is name' do
       @user.name = nil
