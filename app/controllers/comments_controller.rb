@@ -1,8 +1,9 @@
 class CommentsController < ApplicationController
-  load_and_authorize_resource
+  before_action :authenticate_user!
 
-  def new
-    @comment = Comment.new
+  def index
+    post = Post.find(params[:post_id])
+    render json: post.comments
   end
 
   def create
@@ -15,6 +16,10 @@ class CommentsController < ApplicationController
     else
       flash[:alert] = 'The comment adding failed.'
       render :_comment_form, status: :unprocessable_entity
+    end
+
+    format.json do
+      render json: new_comment
     end
   end
 

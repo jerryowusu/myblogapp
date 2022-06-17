@@ -1,6 +1,6 @@
  <section class="all-posts">
     <div class="user">
-      <img src="<%=current_user.photo%>" class="user-image" />
+      <img src="<%= @user.photo%>" class="user-image" />
       <a class="link-to-user" href="/users/<%= @user.id %>"><%= @user.name %></a>
       <h4 class="posts-count">Posts(<%= @user.posts.size %>)</h4>
         <% if @current_user && @current_user.id == @user.id%>
